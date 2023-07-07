@@ -1,6 +1,7 @@
 import { AiFillStar, AiFillLike } from 'react-icons/ai'
-import { CardButton } from './CardButton'
+
 import { ButtonsContainer } from './ButtonsContainer'
+import { useShoppingCartProvider } from '../hooks/useShoppingCartProvider'
 
 interface Props {
   category: string
@@ -11,9 +12,8 @@ interface Props {
   rating: { rate: number, count: number }
   title: string
 }
-const quantity = 0
 
-export const ProductCard: React.FC = ({
+export const ProductCard: React.FC<Props> = ({
   category,
   description,
   id,
@@ -22,6 +22,9 @@ export const ProductCard: React.FC = ({
   rating,
   title
 }: Props) => {
+  const { getItemQuantity } = useShoppingCartProvider()
+
+  const quantity = getItemQuantity(id)
   return (
     <section className="max-w-xs flex flex-col items-center mx-auto border border-gray-200  rounded-xl">
         <section className="mb-10  self-center p-5" >
@@ -41,7 +44,7 @@ export const ProductCard: React.FC = ({
 
         </>
             <div className="flex flex-col  items-center justify-center mb-10">
-            <ButtonsContainer quantity={quantity}/>
+            <ButtonsContainer key={id} id={id} quantity={quantity}/>
             <div className='flex justify-center gap-3 mt-4'>
             <p className=' flex items-center gap-1 text-sm'> <AiFillStar/>{rating.rate}</p>
              <p className=' flex items-center gap-1 text-sm'> <AiFillLike/>{rating.count}</p>

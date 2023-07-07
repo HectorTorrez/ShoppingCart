@@ -1,9 +1,13 @@
 
-import { type SetStateAction, createContext, useEffect, useState } from 'react'
-import { products } from '../services/Products'
+import { createContext, useEffect, useState } from 'react'
+import { products } from '../services/products'
 
 interface ProductsProviderProps {
-  dataProducts: [Product | never]
+  dataProducts: [Product | undefined]
+}
+
+interface ProductsProviderChildren {
+  children: React.ReactNode
 }
 
 interface Product {
@@ -14,17 +18,19 @@ interface Product {
   price: number
   rating: { rate: number, count: number }
   title: string
-
 }
 
-export const ProductsContext = createContext()
+export const ProductsContext = createContext<ProductsProviderProps | undefined>(undefined)
 
-export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) => {
+export const ProductsProvider: React.FC<ProductsProviderChildren> = ({ children }: ProductsProviderChildren) => {
   const [dataProducts, setDataProducts] = useState<ProductsProviderProps[]>([])
+
   useEffect(() => {
-    const getData = async (): Promise<SetStateAction<ProductsProviderProps>> => {
-      const product = await products()
-      setDataProducts(product)
+    const getData = async (): Promise<void> => {
+      const product: ProductsProviderProps[] | undefined = await products()
+      if (product != null) {
+        setDataProducts(product)
+      }
     }
 
     return async () => { await getData() }
