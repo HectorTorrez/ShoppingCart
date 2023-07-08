@@ -1,9 +1,35 @@
 import { Navbar } from '../components/Navbar'
 import { ProductCard } from '../components/ProductCard'
-import { useProductsProvider } from '../hooks/useProductsProvider'
+// import { useProductsProvider } from '../hooks/useProductsProvider'
+import { useEffect, useState } from 'react'
+import { products } from '../services/products'
+interface ProductsProviderProps {
+  dataProducts: [Product | undefined]
+}
+
+interface Product {
+  category: string
+  description: string
+  id: number
+  image: string
+  price: number
+  rating: { rate: number, count: number }
+  title: string
+}
 
 export const Products: React.FC = () => {
-  const { dataProducts } = useProductsProvider()
+  // const { dataProducts } = useProductsProvider()
+  const [dataProducts, setDataProducts] = useState<ProductsProviderProps[]>([])
+
+  const getData = async (): Promise<void> => {
+    const product: ProductsProviderProps[] | undefined = await products()
+    if (product != null) {
+      setDataProducts(product)
+    }
+  }
+  useEffect(() => {
+    getData()
+  }, [])
 
   return (
     <main className='max-w-6xl m-auto px-3'>
