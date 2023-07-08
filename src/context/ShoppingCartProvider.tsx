@@ -1,7 +1,7 @@
-import { createContext, useState } from 'react'
-
+import { type ReactNode, createContext } from 'react'
+import { useState } from 'react'
 interface ShoppingCartProviderProps {
-  children: React.ReactNode
+  children: ReactNode
 }
 
 interface CartItem {
@@ -9,22 +9,33 @@ interface CartItem {
   quantity: number
 }
 
-interface ShoppingCartContextProps {
+interface ShoppingCartContextP {
+  openCart: () => void
+  closeCart: () => void
   getItemQuantity: (id: number) => number
   increseCartQuantity: (id: number) => void
   decreaseCartQuantity: (id: number) => void
   removeFromCart: (id: number) => void
+  cartQuantity: number
 }
 
-export const ShoppingCartContext = createContext<ShoppingCartContextProps | undefined>(undefined)
-export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({ children }: ShoppingCartProviderProps) => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([])
+// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+export const ShoppingCartContext = createContext({} as ShoppingCartContextP)
 
-  const getItemQuantity = (id: number) => {
+export const ShoppingCartProvider = ({ children }: ShoppingCartProviderProps) => {
+  const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const [isOpen, setIsOpen] = useState(false)
+
+  const openCart = () => { setIsOpen(true) }
+  const closeCart = () => { setIsOpen(false) }
+
+  const getItemQuantity = (id: number): any => {
     return cartItems.find(item => item.id === id)?.quantity || 0
   }
 
-  const increseCartQuantity = (id: number) => {
+  const cartQuantity = cartItems.reduce((quantity, item) => item.quantity + quantity, 0)
+
+  const increseCartQuantity = (id: number): any => {
     setCartItems(curremItems => {
       if (curremItems.find(item => item.id === id) == null) {
         return [...curremItems, { id, quantity: 1 }]
@@ -39,7 +50,7 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({ chil
       }
     })
   }
-  const decreaseCartQuantity = (id: number) => {
+  const decreaseCartQuantity = (id: number): any => {
     setCartItems(currItems => {
       if (currItems.find(item => item.id === id)?.quantity === 1) {
         return currItems.filter(item => item.id !== id)
@@ -55,14 +66,14 @@ export const ShoppingCartProvider: React.FC<ShoppingCartProviderProps> = ({ chil
     })
   }
 
-  const removeFromCart = (id: number) => {
+  const removeFromCart = (id: number): any => {
     setCartItems(currItems => {
       return currItems.filter(item => item.id !== id)
     })
   }
 
   return (
-    <ShoppingCartContext.Provider value={{ getItemQuantity, increseCartQuantity, decreaseCartQuantity, removeFromCart }}>
+    <ShoppingCartContext.Provider value={{ getItemQuantity, increseCartQuantity, decreaseCartQuantity, removeFromCart, openCart, closeCart, cartQuantity }}>
         {children}
     </ShoppingCartContext.Provider>
   )
