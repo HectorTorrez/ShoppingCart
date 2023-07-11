@@ -17,6 +17,7 @@ interface ShoppingCartContextP {
   decreaseCartQuantity: (id: number) => void
   removeFromCart: (id: number) => void
   cartQuantity: number
+  cartItems: CartItem
 }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -73,7 +74,7 @@ export const ShoppingCartProvider = ({ children }: ShoppingCartProviderProps) =>
   }
 
   return (
-    <ShoppingCartContext.Provider value={{ getItemQuantity, increseCartQuantity, decreaseCartQuantity, removeFromCart, openCart, closeCart, cartQuantity }}>
+    <ShoppingCartContext.Provider value={{ getItemQuantity, increseCartQuantity, decreaseCartQuantity, removeFromCart, openCart, closeCart, cartQuantity, cartItems, isOpen }}>
         {children}
     </ShoppingCartContext.Provider>
   )

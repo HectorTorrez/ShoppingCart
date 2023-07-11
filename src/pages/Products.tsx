@@ -3,6 +3,9 @@ import { ProductCard } from '../components/ProductCard'
 // import { useProductsProvider } from '../hooks/useProductsProvider'
 import { useEffect, useState } from 'react'
 import { products } from '../services/products'
+import { StoreItem } from '../components/StoreItem'
+import { useShoppingCartProvider } from '../hooks/useShoppingCartProvider'
+import { ShoppingCart } from '../components/ShoppingCart'
 interface ProductsProviderProps {
   dataProducts: [Product | undefined]
 }
@@ -18,8 +21,9 @@ interface Product {
 }
 
 export const Products: React.FC = () => {
-  // const { dataProducts } = useProductsProvider()
   const [dataProducts, setDataProducts] = useState<ProductsProviderProps[]>([])
+
+  const { cartItems, isOpen, closeCart } = useShoppingCartProvider()
 
   const getData = async (): Promise<void> => {
     const product: ProductsProviderProps[] | undefined = await products()
@@ -41,6 +45,20 @@ export const Products: React.FC = () => {
           })
         }
       </section>
+
+        {
+          isOpen && (<ShoppingCart cartItems={cartItems} dataProducts={dataProducts} closeCart={closeCart}/>)
+        }
+        {/* {
+          isOpen && (<>
+            {
+            cartItems?.map(product => {
+              return <StoreItem key={product.id} {...product} dataProducts={dataProducts} closeCart={closeCart} />
+            })
+          }
+            </>)
+        } */}
+
     </main>
   )
 }
