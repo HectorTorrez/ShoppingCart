@@ -1,4 +1,5 @@
 import { useShoppingCartProvider } from '../hooks/useShoppingCartProvider'
+import { formatCurrency } from '../utilities/FormatCurrency'
 
 interface StoreItemProps {
   id: number
@@ -29,12 +30,12 @@ export const StoreItem = ({ quantity, dataProducts, id }: StoreItemProps) => {
       <img className="w-32 h-32 " src={item.image} alt={item.image} />
     </section>
     <section className="h-fit">
-        <p>{item.title}</p>
+        <p className='font-bold '>{item.title}</p>
         <div className="flex justify-between">
         <p>${item.price}
         <span className='ml-2'>{quantity > 1 ? multi : ''}</span>
         </p>
-        <p>${item.price * quantity}</p>
+        <p>{formatCurrency(item.price * quantity)}</p>
         </div>
     </section>
     <p className='border border-red-300 h-fit px-2 rounded-md hover:bg-red-300 hover:text-white cursor-pointer' onClick={() => removeFromCart(item.id)}>&times;</p>
