@@ -4,11 +4,7 @@ import { formatCurrency } from '../utilities/FormatCurrency'
 interface StoreItemProps {
   id: number
   quantity: number
-  dataProducts: [dataProduct]
-}
-
-interface StoreItemType {
-  StoreItem: JSX.Element | null
+  dataProducts: dataProduct[]
 }
 
 interface dataProduct {
@@ -21,7 +17,7 @@ interface dataProduct {
   title: string
 }
 
-export const StoreItem = ({ quantity, dataProducts, id }: StoreItemProps): StoreItemType => {
+export const StoreItem = ({ quantity, dataProducts, id }: StoreItemProps): JSX.Element | null => {
   const { removeFromCart } = useShoppingCartProvider()
 
   const multi = `x${quantity}`

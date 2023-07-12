@@ -1,21 +1,11 @@
 
-interface Props {
-  category: string
-  description: string
-  id: number
-  image: string
-  price: number
-  rating: { rate: number, count: number }
-  title: string
-
-}
-
 interface Data {
-  dataProducts: Props[]
+  setSelectedCategory: (category: string) => void
+
 }
 
-export const Filter = ({ setSelectedCategory }: Data) => {
-  const handleCategoryChange = (category) => {
+export const Filter = ({ setSelectedCategory }: Data): JSX.Element => {
+  const handleCategoryChange = (category: string): void => {
     setSelectedCategory(category)
   }
   return (
@@ -23,10 +13,10 @@ export const Filter = ({ setSelectedCategory }: Data) => {
              <select name="select-categories" id="" onChange={(e) => { handleCategoryChange(e.target.value) }}>
                    <option value=''>Select</option>
 
-                   <option value="men's clothing">men's clothing</option>
+                   <option value="men's clothing">men&apos;s clothing</option>
                    <option value="jewelery">jewelery</option>
                    <option value="electronics">electronics</option>
-                   <option value="women's clothing">women's clothing</option>
+                   <option value="women's clothing">women&apos;s clothing</option>
 
             </select>
     </section>

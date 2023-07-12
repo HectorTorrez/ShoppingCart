@@ -1,7 +1,28 @@
+
 import { formatCurrency } from '../utilities/FormatCurrency'
 import { StoreItem } from './StoreItem'
 
-export const ShoppingCart = ({ cartItems, closeCart, dataProducts }) => {
+interface dataProducts {
+  category: string
+  description: string
+  id: number
+  image: string
+  price: number
+  rating: { rate: number, count: number }
+  title: string
+}
+interface CartItem {
+  id: number
+  quantity: number
+}
+
+interface ShoppingCartProps {
+  cartItems: CartItem[]
+  closeCart: () => void
+  dataProducts: dataProducts[]
+}
+
+export const ShoppingCart = ({ cartItems, closeCart, dataProducts }: ShoppingCartProps): JSX.Element => {
   return (
     <section className="flex p-5 gap-10 flex-col fixed top-0 right-0 h-full w-full lg:w-2/5 bg-white overflow-auto  ">
     <header className="flex justify-between items-center">
