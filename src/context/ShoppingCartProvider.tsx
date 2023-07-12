@@ -1,4 +1,4 @@
-import { type ReactNode, createContext } from 'react'
+import { type ReactNode, createContext, useEffect } from 'react'
 import { useState } from 'react'
 interface ShoppingCartProviderProps {
   children: ReactNode
@@ -24,8 +24,15 @@ interface ShoppingCartContextP {
 export const ShoppingCartContext = createContext({} as ShoppingCartContextP)
 
 export const ShoppingCartProvider = ({ children }: ShoppingCartProviderProps) => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const [cartItems, setCartItems] = useState<CartItem[]>(
+    JSON.parse(localStorage.getItem('items') || '[]')
+  )
+
   const [isOpen, setIsOpen] = useState(false)
+
+  useEffect(() => {
+    localStorage.setItem('items', JSON.stringify(cartItems))
+  }, [cartItems])
 
   const openCart = () => { setIsOpen(true) }
   const closeCart = () => { setIsOpen(false) }
