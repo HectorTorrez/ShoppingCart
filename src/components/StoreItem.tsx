@@ -1,10 +1,14 @@
-import { useShoppingCartProvider } from '../hooks/useShoppingCartProvider'
+import { useShoppingCartProvider } from '../context/ShoppingCartProvider'
 import { formatCurrency } from '../utilities/FormatCurrency'
 
 interface StoreItemProps {
   id: number
   quantity: number
   dataProducts: [dataProduct]
+}
+
+interface StoreItemType {
+  StoreItem: JSX.Element | null
 }
 
 interface dataProduct {
@@ -17,7 +21,7 @@ interface dataProduct {
   title: string
 }
 
-export const StoreItem = ({ quantity, dataProducts, id }: StoreItemProps) => {
+export const StoreItem = ({ quantity, dataProducts, id }: StoreItemProps): StoreItemType => {
   const { removeFromCart } = useShoppingCartProvider()
 
   const multi = `x${quantity}`

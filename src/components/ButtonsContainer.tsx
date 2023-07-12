@@ -1,4 +1,6 @@
-import { useShoppingCartProvider } from '../hooks/useShoppingCartProvider'
+import { useShoppingCartProvider } from '../context/ShoppingCartProvider'
+
+// import { useShoppingCartProvider } from '../hooks/useShoppingCartProvider'
 interface Props {
   quantity: number
   id: number

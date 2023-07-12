@@ -1,14 +1,14 @@
-import { Link } from 'react-router-dom'
-import { useShoppingCartProvider } from '../hooks/useShoppingCartProvider'
+
+import { useShoppingCartProvider } from '../context/ShoppingCartProvider'
 
 export const Navbar: React.FC = () => {
   const { openCart, cartQuantity } = useShoppingCartProvider()
   return (
     <nav className='flex justify-between bg-white mx-4 px-4 shadow-sm pt-5 sticky top-0 pb-5 items-center'>
 
-        <Link className='font-bold  text-xl' to={'/'}>
+        <p className='font-bold  text-xl'>
             Product
-        </Link>
+        </p>
         {
           cartQuantity > 0 && (
         <button onClick={openCart} className='border border-blue-200 w-10 h-10 rounded-xl p-2 relative hover:bg-blue-200 hover:text-white'>
