@@ -1,7 +1,6 @@
-import { AiFillStar, AiFillLike } from 'react-icons/ai'
 
 import { ButtonsContainer } from './ButtonsContainer'
-import { useShoppingCartProvider } from '../hooks/useShoppingCartProvider'
+import { useShoppingCartProvider } from '../context/ShoppingCartProvider'
 
 interface Props {
   category: string
@@ -46,8 +45,8 @@ export const ProductCard: React.FC<Props> = ({
             <div className="flex flex-col  items-center justify-center mb-10">
             <ButtonsContainer key={id} id={id} quantity={quantity}/>
             <div className='flex justify-center gap-3 mt-4'>
-            <p className=' flex items-center gap-1 text-sm'> <AiFillStar/>{rating.rate}</p>
-             <p className=' flex items-center gap-1 text-sm'> <AiFillLike/>{rating.count}</p>
+            <p className=' flex items-center gap-1 text-sm'> {rating.rate}</p>
+             <p className=' flex items-center gap-1 text-sm'> {rating.count}</p>
             </div>
 
             </div>
