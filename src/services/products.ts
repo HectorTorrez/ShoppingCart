@@ -6,6 +6,7 @@ interface ProductsReturn {
   price: number
   rating: { rate: number, count: number }
   title: string
+  selectedCategory: string
 }
 
 export const products = async (): Promise<ProductsReturn | undefined> => {
