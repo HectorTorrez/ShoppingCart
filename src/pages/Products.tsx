@@ -75,7 +75,7 @@ export const Products: React.FC = () => {
           </>
             )
           : (
-          <>IS LOADING</>
+          <p className='font-bold flex justify-center text-6xl'>Please, wait a moment.</p>
             )
       }
     </main>
