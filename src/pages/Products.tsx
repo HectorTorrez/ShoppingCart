@@ -7,7 +7,7 @@ import { useShoppingCartProvider } from '../context/ShoppingCartProvider'
 import { ProductCard } from '../components/ProductCard'
 interface ProductsProviderProps extends Product {
   dataProducts: Product[]
-
+  ProductsReturn: any
 }
 
 interface Product {
@@ -21,7 +21,7 @@ interface Product {
 }
 
 export const Products: React.FC = () => {
-  const [dataProducts, setDataProducts] = useState([])
+  const [dataProducts, setDataProducts] = useState<ProductsProviderProps[]>([])
   const [isLoading, setIsLoading] = useState(false)
 
   const [selectedCategory, setSelectedCategory] = useState('')
@@ -29,8 +29,8 @@ export const Products: React.FC = () => {
   const { cartItems, isOpen, closeCart } = useShoppingCartProvider()
 
   const getData = async (): Promise<void> => {
-    const product: ProductsProviderProps[] = await products()
-    if (product != null) {
+    const product: any = await products()
+    if (product !== undefined) {
       setDataProducts(product)
     }
   }
@@ -43,24 +43,16 @@ export const Products: React.FC = () => {
     if (selectedCategory === '') {
       return dataProducts
     }
-    return dataProducts.filter(item => item.category === selectedCategory)
+    return dataProducts.filter((item: ProductsProviderProps) => item.category === selectedCategory)
   }
 
   const filteredList = useMemo(getFilteredList, [selectedCategory, dataProducts])
-
-  const uniqueCategories = dataProducts.reduce((unique, category) => {
-    const categoryExists = unique.find(cat => cat.category === category.category)
-    if (!categoryExists) {
-      return [...unique, category]
-    }
-    return unique
-  }, [])
 
   return (
     <main className='max-w-6xl m-auto px-3'>
     <Navbar/>
 
-        <Filter uniqueCategories={uniqueCategories} setSelectedCategory={setSelectedCategory} />
+        <Filter setSelectedCategory={setSelectedCategory} />
       {
         isLoading
           ? (
@@ -76,7 +68,7 @@ export const Products: React.FC = () => {
 </section>
       <section className='duration-1000'>
         {
-          isOpen && (<ShoppingCart cartItems={cartItems} dataProducts={dataProducts} closeCart={closeCart} isOpen={isOpen}/>)
+          (Boolean(isOpen)) && (<ShoppingCart cartItems={cartItems} dataProducts={dataProducts} closeCart={closeCart} isOpen={isOpen}/>)
         }
 
       </section>

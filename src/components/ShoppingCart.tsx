@@ -1,5 +1,5 @@
 
-import { formatCurrency } from '../utilities/FormatCurrency'
+import { formatCurrency } from '../utilities/formatCurrency'
 import { StoreItem } from './StoreItem'
 
 interface dataProducts {
@@ -42,7 +42,7 @@ export const ShoppingCart = ({ cartItems, closeCart, dataProducts, isOpen }: Sho
       {formatCurrency(
         cartItems.reduce((total, cartItem) => {
           const item = dataProducts.find(i => i.id === cartItem.id)
-          return total + (item?.price || 0) * cartItem.quantity
+          return total + (item?.price ?? 0) * cartItem.quantity
         }, 0)
       )}
     </section>

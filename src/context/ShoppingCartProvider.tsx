@@ -13,7 +13,7 @@ interface CartItem {
 interface ShoppingCartContextP {
   openCart: () => void
   closeCart: () => void
-  getItemQuantity: (id: number) => number
+  getItemQuantity: (id: number) => number | boolean
   increseCartQuantity: (id: number) => void
   decreaseCartQuantity: (id: number) => void
   removeFromCart: (id: number) => void
@@ -27,7 +27,7 @@ const ShoppingCartContext = createContext<ShoppingCartContextP>({} as ShoppingCa
 
 export const ShoppingCartProvider = ({ children }: ShoppingCartProviderProps): JSX.Element => {
   const [cartItems, setCartItems] = useState<CartItem[]>(
-    JSON.parse(localStorage.getItem('items') || '[]')
+    JSON.parse(localStorage.getItem('items') ?? '[]')
   )
 
   const [isOpen, setIsOpen] = useState(false)
@@ -39,8 +39,8 @@ export const ShoppingCartProvider = ({ children }: ShoppingCartProviderProps): J
   const openCart = (): void => { setIsOpen(true) }
   const closeCart = (): void => { setIsOpen(false) }
 
-  const getItemQuantity = (id: number): number => {
-    return cartItems.find(item => item.id === id)?.quantity || 0
+  const getItemQuantity = (id: number): number | boolean => {
+    return ((cartItems.find(item => item.id === id)?.quantity) != null) || 0
   }
 
   const cartQuantity = cartItems.reduce((quantity, item) => item.quantity + quantity, 0)

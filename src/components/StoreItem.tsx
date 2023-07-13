@@ -1,5 +1,5 @@
 import { useShoppingCartProvider } from '../context/ShoppingCartProvider'
-import { formatCurrency } from '../utilities/FormatCurrency'
+import { formatCurrency } from '../utilities/formatCurrency'
 
 interface StoreItemProps {
   id: number
