@@ -20,11 +20,12 @@ interface ShoppingCartProps {
   cartItems: CartItem[]
   closeCart: () => void
   dataProducts: dataProducts[]
+  isOpen: boolean
 }
 
-export const ShoppingCart = ({ cartItems, closeCart, dataProducts }: ShoppingCartProps): JSX.Element => {
+export const ShoppingCart = ({ cartItems, closeCart, dataProducts, isOpen }: ShoppingCartProps): JSX.Element => {
   return (
-    <section className="flex p-5 gap-10 flex-col fixed top-0 right-0 h-full w-full lg:w-2/5 bg-white overflow-auto  ">
+    <section className={`flex p-5 gap-10 flex-col fixed top-0 right-0 h-full w-full lg:w-2/5 bg-white overflow-auto transition-opacity duration-300 ${isOpen ? '' : 'opacity-0'}`}>
     <header className="flex justify-between items-center">
       <h2 className='font-bold text-xl'>Store</h2>
       <button onClick={closeCart} className="text-2xl font-bold">&times;</button>

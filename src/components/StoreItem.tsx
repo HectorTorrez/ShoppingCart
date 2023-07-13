@@ -26,10 +26,9 @@ export const StoreItem = ({ quantity, dataProducts, id }: StoreItemProps): JSX.E
   return (
 
     <section className="flex justify-between gap-2 ">
-    <section className='w-32 h-32'>
+    <section className='flex'>
       <img className="w-32 h-32 " src={item.image} alt={item.image} />
-    </section>
-    <section className="h-fit">
+      <section className="h-fit">
         <p className='font-bold '>{item.title}</p>
         <div className="flex justify-between">
         <p>${item.price}
@@ -38,6 +37,8 @@ export const StoreItem = ({ quantity, dataProducts, id }: StoreItemProps): JSX.E
         <p>{formatCurrency(item.price * quantity)}</p>
         </div>
     </section>
+    </section>
+
     <p className='border border-red-300 h-fit px-2 rounded-md hover:bg-red-300 hover:text-white cursor-pointer' onClick={() => removeFromCart(item.id)}>&times;</p>
     </section>
 

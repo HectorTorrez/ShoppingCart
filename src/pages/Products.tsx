@@ -74,10 +74,12 @@ export const Products: React.FC = () => {
 }
 
 </section>
+      <section className='duration-1000'>
+        {
+          isOpen && (<ShoppingCart cartItems={cartItems} dataProducts={dataProducts} closeCart={closeCart} isOpen={isOpen}/>)
+        }
 
-{
-  isOpen && (<ShoppingCart cartItems={cartItems} dataProducts={dataProducts} closeCart={closeCart}/>)
-}
+      </section>
           </>
             )
           : (
