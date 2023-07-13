@@ -13,7 +13,7 @@ interface CartItem {
 interface ShoppingCartContextP {
   openCart: () => void
   closeCart: () => void
-  getItemQuantity: (id: number) => number
+  getItemQuantity: (id: number) => number | boolean
   increseCartQuantity: (id: number) => void
   decreaseCartQuantity: (id: number) => void
   removeFromCart: (id: number) => void
