@@ -13,7 +13,7 @@ interface CartItem {
 interface ShoppingCartContextP {
   openCart: () => void
   closeCart: () => void
-  getItemQuantity: (id: number) => number | boolean
+  getItemQuantity: (id: number) => number
   increseCartQuantity: (id: number) => void
   decreaseCartQuantity: (id: number) => void
   removeFromCart: (id: number) => void
@@ -40,7 +40,8 @@ export const ShoppingCartProvider = ({ children }: ShoppingCartProviderProps): J
   const closeCart = (): void => { setIsOpen(false) }
 
   const getItemQuantity = (id: number): number | boolean => {
-    return ((cartItems.find(item => item.id === id)?.quantity) != null) || 0
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+    return cartItems.find(item => item.id === id)?.quantity ?? 0
   }
 
   const cartQuantity = cartItems.reduce((quantity, item) => item.quantity + quantity, 0)
